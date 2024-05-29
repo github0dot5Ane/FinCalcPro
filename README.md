@@ -1,2 +1,2 @@
 # FinCalcPro
-una aplicacion en web para calcular el interes general o compuesto
+una aplicacion en web para calcular el interes simple o compuesto
