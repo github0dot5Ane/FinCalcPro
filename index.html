@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculadora financiera</title>
+        <link rel="icon" href="img/pestaña.ico" type="image/x-icon">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+<body class="financial-calculator-body">
+    <div class="container">
+        <aside class="sidebar">
+            <img src="img/body.ico" alt="Ícono">
+            <h2>Calculos financieros</h2>
+            <button class="tab-link active" onclick="openModule(event, 'SimpleInterest')">Interés Simple</button>
+            <button class="tab-link" onclick="openModule(event, 'CompoundInterest')">Interés Compuesto</button>
+        </aside>
+        <main class="main-content">
+            <div id="SimpleInterest" class="tab-content active">
+                <div class="form-section">
+                    <div>
+                        <h2>Interés Simple</h2>
+                    </div>
+                    
+                    <form id="simpleInterestForm">
+                        <label for="principal">Monto inicial:</label>
+                        <div>
+                            <input type="number" id="principal" required>
+                            <select id="currency">
+                                <option value="USD">Dólar</option>
+                                <option value="EUR">Euro</option>
+                                <option value="PEN">Sol</option>
+                                <option value="JPY">Yen</option>
+                                <option value="CNY">Yuan</option>
+                            </select>
+                        </div>
+
+                        
+                        <label for="rate">Tasa de interés:</label>
+                        <div>
+                        <input type="number" id="rate" step="0.01" required>
+                        <select id="rateUnit">
+                            <option value="yearly">Anual</option>
+                            <option value="monthly">Mensual</option>
+                            <option value="quarterly">Trimestral</option>
+                            <option value="semestral">Semestral</option>
+                            <option value="daily">Diaria</option>
+                        </select>
+                        </div>
+                        
+                        <label for="time">Tiempo:</label>
+                        <div>
+                        <input type="number" id="time" required>
+                        <select id="timeUnit">
+                            <option value="years">Años</option>
+                            <option value="months">Meses</option>
+                            <option value="quarters">Trimestres</option>
+                            <option value="semestres">Semestral</option>
+                            <option value="days">Días</option>
+                        </select>
+                        </div>
+                        <button type="submit">Calcular</button>
+                    </form>
+                </div>
+                <div class="results-section">
+                    <div class="results">
+                        <h3>Resumen</h3>
+                        <p>Total Capital: <span id="currencySymbol"></span><span id="totalCapital"></span></p>
+                        <p>Total Interés: <span id="currencySymbol"></span><span id="totalInterest"></span></p>
+                        <p>Balance Final: <span id="currencySymbol"></span><span id="balanceFinal"></span></p>
+                        <canvas id="simpleInterestPieChart" class="small-pie-chart"></canvas>
+                        <canvas id="simpleInterestLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div id="CompoundInterest" class="tab-content">
+                <div class="form-section">
+                    <h2>Interés Compuesto</h2>
+                    <form id="compoundInterestForm">
+                        <label for="principalComp">Monto inicial:</label>
+                        <div>
+                            <input type="number" id="principalComp" required>
+                            <select id="currencyComp">
+                                <option value="USD">Dólar</option>
+                                <option value="EUR">Euro</option>
+                                <option value="PEN">Sol</option>
+                                <option value="JPY">Yen</option>
+                                <option value="CNY">Yuan</option>
+                            </select>
+                        </div>
+
+                        
+                        <label for="rateComp">Tasa de interés:</label>
+                        <div>                        <input type="number" id="rateComp" step="0.01" required>
+                            <select id="rateUnitComp">
+                                <option value="yearly">Anual</option>
+                                <option value="monthly">Mensual</option>
+                                <option value="quarterly">Trimestral</option>
+                                <option value="semestral">Semestral</option>
+                                <option value="daily">Diaria</option>
+                            </select></div>
+
+                        
+                        <label for="timeComp">Tiempo:</label>
+                        <div>
+                            <input type="number" id="timeComp" required>
+                            <select id="timeUnitComp">
+                                <option value="years">Años</option>
+                                <option value="months">Meses</option>
+                                <option value="quarters">Trimestres</option>
+                                <option value="semestres">Semestral</option>
+                                <option value="days">Días</option>
+                            </select>
+                        </div>
+
+                        
+                        <label for="compound">Capitalización:</label>
+                        <select id="compound">
+                            <option value="annually">Anual</option>
+                            <option value="semiannually">Semestral</option>
+                            <option value="quarterly">Trimestral</option>
+                            <option value="monthly">Mensual</option>
+                            <option value="daily">Diaria</option>
+                        </select>
+                        <button type="submit">Calcular</button>
+                    </form>
+                </div>
+                <div class="results-section">
+                    <div class="results">
+                        <h3>Resumen</h3>
+                        <p>Total Capital: <span id="currencySymbolComp"></span><span id="totalCapitalComp"></span></p>
+                        
+                        <p>Total Interés: <span id="currencySymbolComp"></span><span id="totalInterestComp"></span></p>
+                        <p>Balance Final: <span id="currencySymbolComp"></span><span id="balanceFinalComp"></span></p>
+                        <canvas id="compoundInterestPieChart" class="small-pie-chart"></canvas>
+                    </div>
+                    <canvas id="compoundInterestLineChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
