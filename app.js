@@ -1,3 +1,4 @@
+//Proyect A
 document.addEventListener('DOMContentLoaded', () => {
     function convertToAnnualRate(rate, rateUnit) {
         switch (rateUnit) {
