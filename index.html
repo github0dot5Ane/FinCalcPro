@@ -1,146 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Calculadora financiera</title>
-        <link rel="icon" href="img/pestaña.ico" type="image/x-icon">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <link rel="stylesheet" href="styles.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
-<body class="financial-calculator-body">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora financiera</title>
+    <link rel="icon" href="img/pestaña.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="financial-calculator-body">
     <div class="container">
-        <aside class="sidebar">
-            <img src="img/body.ico" alt="Ícono">
-            <h2>Calculos financieros</h2>
-            <button class="tab-link active" onclick="openModule(event, 'SimpleInterest')">Interés Simple</button>
-            <button class="tab-link" onclick="openModule(event, 'CompoundInterest')">Interés Compuesto</button>
-        </aside>
-        <main class="main-content">
-            <div id="SimpleInterest" class="tab-content active">
-                <div class="form-section">
-                    <div>
-                        <h2>Interés Simple</h2>
-                    </div>
-                    
-                    <form id="simpleInterestForm">
-                        <label for="principal">Monto inicial:</label>
-                        <div>
-                            <input type="number" id="principal" required>
-                            <select id="currency">
-                                <option value="USD">Dólar</option>
-                                <option value="EUR">Euro</option>
-                                <option value="PEN">Sol</option>
-                                <option value="JPY">Yen</option>
-                                <option value="CNY">Yuan</option>
-                            </select>
-                        </div>
+      <aside class="sidebar">
+        <img src="img/body.ico" alt="Ícono" />
+        <h2>Calculos financieros</h2>
 
-                        
-                        <label for="rate">Tasa de interés:</label>
-                        <div>
-                        <input type="number" id="rate" step="0.01" required>
-                        <select id="rateUnit">
-                            <option value="yearly">Anual</option>
-                            <option value="monthly">Mensual</option>
-                            <option value="quarterly">Trimestral</option>
-                            <option value="semestral">Semestral</option>
-                            <option value="daily">Diaria</option>
-                        </select>
-                        </div>
-                        
-                        <label for="time">Tiempo:</label>
-                        <div>
-                        <input type="number" id="time" required>
-                        <select id="timeUnit">
-                            <option value="years">Años</option>
-                            <option value="months">Meses</option>
-                            <option value="quarters">Trimestres</option>
-                            <option value="semestres">Semestral</option>
-                            <option value="days">Días</option>
-                        </select>
-                        </div>
-                        <button type="submit">Calcular</button>
-                    </form>
-                </div>
-                <div class="results-section">
-                    <div class="results">
-                        <h3>Resumen</h3>
-                        <p>Total Capital: <span id="currencySymbol"></span><span id="totalCapital"></span></p>
-                        <p>Total Interés: <span id="currencySymbol"></span><span id="totalInterest"></span></p>
-                        <p>Balance Final: <span id="currencySymbol"></span><span id="balanceFinal"></span></p>
-                        <canvas id="simpleInterestPieChart" class="small-pie-chart"></canvas>
-                        <canvas id="simpleInterestLineChart"></canvas>
-                    </div>
-                </div>
+        <button
+          class="tab-link active"
+          onclick="openModule(event, 'SimpleInterest')"
+        >
+          Interés Simple
+        </button>
+        <button
+          class="tab-link"
+          onclick="openModule(event, 'CompoundInterest')"
+        >
+          Interés Compuesto
+        </button>
+        <button
+          class="tab-link"
+          onclick="openModule(event, 'FrenchAmortization')"
+        >
+          Amortización Francesa
+        </button>
+        <button
+          class="tab-link"
+          onclick="openModule(event, 'GermanAmortization')"
+        >
+          Amortización Alemana
+        </button>
+        <button
+          class="tab-link"
+          onclick="openModule(event, 'AmericanAmortization')"
+        >
+          Amortización Americana
+        </button>
+      </aside>
+      <main class="main-content">
+        <div id="SimpleInterest" class="tab-content active">
+          <div class="form-section">
+            <div>
+              <h2>Interés Simple</h2>
             </div>
-            <div id="CompoundInterest" class="tab-content">
-                <div class="form-section">
-                    <h2>Interés Compuesto</h2>
-                    <form id="compoundInterestForm">
-                        <label for="principalComp">Monto inicial:</label>
-                        <div>
-                            <input type="number" id="principalComp" required>
-                            <select id="currencyComp">
-                                <option value="USD">Dólar</option>
-                                <option value="EUR">Euro</option>
-                                <option value="PEN">Sol</option>
-                                <option value="JPY">Yen</option>
-                                <option value="CNY">Yuan</option>
-                            </select>
-                        </div>
-
-                        
-                        <label for="rateComp">Tasa de interés:</label>
-                        <div>                        <input type="number" id="rateComp" step="0.01" required>
-                            <select id="rateUnitComp">
-                                <option value="yearly">Anual</option>
-                                <option value="monthly">Mensual</option>
-                                <option value="quarterly">Trimestral</option>
-                                <option value="semestral">Semestral</option>
-                                <option value="daily">Diaria</option>
-                            </select></div>
-
-                        
-                        <label for="timeComp">Tiempo:</label>
-                        <div>
-                            <input type="number" id="timeComp" required>
-                            <select id="timeUnitComp">
-                                <option value="years">Años</option>
-                                <option value="months">Meses</option>
-                                <option value="quarters">Trimestres</option>
-                                <option value="semestres">Semestral</option>
-                                <option value="days">Días</option>
-                            </select>
-                        </div>
-
-                        
-                        <label for="compound">Capitalización:</label>
-                        <select id="compound">
-                            <option value="annually">Anual</option>
-                            <option value="semiannually">Semestral</option>
-                            <option value="quarterly">Trimestral</option>
-                            <option value="monthly">Mensual</option>
-                            <option value="daily">Diaria</option>
-                        </select>
-                        <button type="submit">Calcular</button>
-                    </form>
-                </div>
-                <div class="results-section">
-                    <div class="results">
-                        <h3>Resumen</h3>
-                        <p>Total Capital: <span id="currencySymbolComp"></span><span id="totalCapitalComp"></span></p>
-                        
-                        <p>Total Interés: <span id="currencySymbolComp"></span><span id="totalInterestComp"></span></p>
-                        <p>Balance Final: <span id="currencySymbolComp"></span><span id="balanceFinalComp"></span></p>
-                        <canvas id="compoundInterestPieChart" class="small-pie-chart"></canvas>
-                    </div>
-                    <canvas id="compoundInterestLineChart"></canvas>
-                </div>
+            <form id="simpleInterestForm">
+              <label for="principal">Monto inicial:</label>
+              <div>
+                <input type="number" id="principal" required />
+                <select id="currency">
+                  <option value="USD">Dólar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PEN">Sol</option>
+                  <option value="JPY">Yen</option>
+                  <option value="CNY">Yuan</option>
+                </select>
+              </div>
+              <label for="rate">Tasa de interés:</label>
+              <div>
+                <input type="number" id="rate" step="0.01" required />
+                <select id="rateUnit">
+                  <option value="yearly">Anual</option>
+                  <option value="monthly">Mensual</option>
+                  <option value="quarterly">Trimestral</option>
+                  <option value="fortnightly">Quincenal</option>
+                  <option value="daily">Diaria</option>
+                </select>
+              </div>
+              <label for="time">Tiempo:</label>
+              <div>
+                <input type="number" id="time" required />
+                <select id="timeUnit">
+                  <option value="years">Años</option>
+                  <option value="months">Meses</option>
+                  <option value="quarters">Trimestres</option>
+                  <option value="fortnights">Quincenas</option>
+                  <option value="days">Días</option>
+                </select>
+              </div>
+              <button type="submit">Calcular</button>
+            </form>
+          </div>
+          <div class="results-section">
+            <div class="results">
+              <h3>Resumen</h3>
+              <p>
+                Total Capital: <span id="currencySymbol"></span
+                ><span id="totalCapital"></span>
+              </p>
+              <p>
+                Total Interés: <span id="currencySymbol"></span
+                ><span id="totalInterest"></span>
+              </p>
+              <p>
+                Balance Final: <span id="currencySymbol"></span
+                ><span id="balanceFinal"></span>
+              </p>
+              <canvas
+                id="simpleInterestPieChart"
+                class="small-pie-chart"
+              ></canvas>
+              <canvas id="simpleInterestLineChart"></canvas>
             </div>
-        </main>
+          </div>
+        </div>
+        <div id="CompoundInterest" class="tab-content">
+          <div class="form-section">
+            <h2>Interés Compuesto</h2>
+            <form id="compoundInterestForm">
+              <label for="principalComp">Monto inicial:</label>
+              <div>
+                <input type="number" id="principalComp" required />
+                <select id="currencyComp">
+                  <option value="USD">Dólar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PEN">Sol</option>
+                  <option value="JPY">Yen</option>
+                  <option value="CNY">Yuan</option>
+                </select>
+              </div>
+              <label for="rateComp">Tasa de interés:</label>
+              <div>
+                <input type="number" id="rateComp" step="0.01" required />
+                <select id="rateUnitComp">
+                  <option value="yearly">Anual</option>
+                  <option value="monthly">Mensual</option>
+                  <option value="quarterly">Trimestral</option>
+                  <option value="fortnightly">Quincenal</option>
+                  <option value="daily">Diaria</option>
+                </select>
+              </div>
+              <label for="timeComp">Tiempo:</label>
+              <div>
+                <input type="number" id="timeComp" required />
+                <select id="timeUnitComp">
+                  <option value="years">Años</option>
+                  <option value="months">Meses</option>
+                  <option value="quarters">Trimestres</option>
+                  <option value="fortnights">Quincenas</option>
+                  <option value="days">Días</option>
+                </select>
+              </div>
+              <label for="compound">Capitalización:</label>
+              <select id="compound">
+                <option value="annually">Anual</option>
+                <option value="semiannually">Semestral</option>
+                <option value="quarterly">Trimestral</option>
+                <option value="monthly">Mensual</option>
+                <option value="daily">Diaria</option>
+              </select>
+              <button type="submit">Calcular</button>
+            </form>
+          </div>
+          <div class="results-section">
+            <div class="results">
+              <h3>Resumen</h3>
+              <p>
+                Total Capital: <span id="currencySymbolComp"></span
+                ><span id="totalCapitalComp"></span>
+              </p>
+              <p>
+                Total Interés: <span id="currencySymbolComp"></span
+                ><span id="totalInterestComp"></span>
+              </p>
+              <p>
+                Balance Final: <span id="currencySymbolComp"></span
+                ><span id="balanceFinalComp"></span>
+              </p>
+              <canvas
+                id="compoundInterestPieChart"
+                class="small-pie-chart"
+              ></canvas>
+            </div>
+            <canvas id="compoundInterestLineChart"></canvas>
+          </div>
+        </div>
+        <!-- Amortización Francesa -->
+        <div id="FrenchAmortization" class="tab-content">
+          <div class="form-section">
+            <h2>Amortización Francesa</h2>
+            <form id="frenchAmortizationForm">
+              <label for="principalFr">Monto inicial:</label>
+              <div>
+                <input type="number" id="principalFr" required />
+                <select id="currencyFr">
+                  <option value="USD">Dólar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PEN">Sol</option>
+                  <option value="JPY">Yen</option>
+                  <option value="CNY">Yuan</option>
+                </select>
+              </div>
+              <label for="rateFr">Tasa de interés:</label>
+              <div>
+                <input type="number" id="rateFr" step="0.01" required />
+                <select id="rateUnitFr">
+                  <option value="yearly">Anual</option>
+                  <option value="monthly">Mensual</option>
+                  <option value="quarterly">Trimestral</option>
+                  <option value="fortnightly">Quincenal</option>
+                  <option value="daily">Diaria</option>
+                </select>
+              </div>
+              <label for="timeFr">Cantidad de cuotas:</label>
+              <div>
+                <input type="number" id="timeFr" required />
+                <select id="timeUnitFr">
+                  <option value="years">Años</option>
+                  <option value="months">Meses</option>
+                  <option value="quarters">Trimestres</option>
+                  <option value="fortnights">Quincenas</option>
+                  <option value="days">Días</option>
+                </select>
+              </div>
+              <button type="submit">Calcular</button>
+            </form>
+          </div>
+          <div class="results-section">
+            <div class="results">
+              <h3>Resumen</h3>
+              <p>
+                Total Amortizacion: <span id="currencySymbolFr"></span
+                ><span id="totalCapitalFr"></span>
+              </p>
+              <p>
+                Total Interés: <span id="currencySymbolFr"></span
+                ><span id="totalInterestFr"></span>
+              </p>
+              <p>
+                Total Cuota: <span id="currencySymbolFr"></span
+                ><span id="balanceFinalFr"></span>
+              </p>
+              <button id="show-dialog">Mostrar Tabla</button>
+              <canvas id="frenchAmortizationBarChart"></canvas>
+
+              <dialog id="dialog">
+                <span class="close">&times;</span>
+                <div class="centrado">
+                  <h4>Cronograma de pagos</h4>
+                </div>
+                <table id="data-table">
+                  <thead>
+                    <tr>
+                      <th>Nro cuota</th>
+                      <th>Cuota</th>
+                      <th>Interes</th>
+                      <th>Amortizacion</th>
+                      <th>Deuda Restante</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Los datos se agregarán dinámicamente aquí -->
+                  </tbody>
+                </table>
+              </dialog>
+            </div>
+          </div>
+        </div>
+        <!-- Amortización Alemana -->
+        <div id="GermanAmortization" class="tab-content">
+          <div class="form-section">
+            <h2>Amortización Alemana</h2>
+            <form id="germanAmortizationForm">
+              <label for="principalGer">Monto inicial:</label>
+              <div>
+                <input type="number" id="principalGer" required />
+                <select id="currencyGer">
+                  <option value="USD">Dólar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PEN">Sol</option>
+                  <option value="JPY">Yen</option>
+                  <option value="CNY">Yuan</option>
+                </select>
+              </div>
+              <label for="rateGer">Tasa de interés:</label>
+              <div>
+                <input type="number" id="rateGer" step="0.01" required />
+                <select id="rateUnitGer">
+                  <option value="yearly">Anual</option>
+                  <option value="monthly">Mensual</option>
+                  <option value="quarterly">Trimestral</option>
+                  <option value="fortnightly">Quincenal</option>
+                  <option value="daily">Diaria</option>
+                </select>
+              </div>
+              <label for="timeGer">Cantidad de cuotas:</label>
+              <div>
+                <input type="number" id="timeGer" required />
+                <select id="timeUnitGer">
+                  <option value="years">Años</option>
+                  <option value="months">Meses</option>
+                  <option value="quarters">Trimestres</option>
+                  <option value="fortnights">Quincenas</option>
+                  <option value="days">Días</option>
+                </select>
+              </div>
+              <button type="submit">Calcular</button>
+            </form>
+          </div>
+          <div class="results-section">
+            <div class="results">
+              <h3>Resumen</h3>
+              <p>
+                Total Amortizacion: <span id="currencySymbolGer"></span
+                ><span id="totalCapitalGer"></span>
+              </p>
+              <p>
+                Total Interés: <span id="currencySymbolGer"></span
+                ><span id="totalInterestGer"></span>
+              </p>
+              <p>
+                Total Cuota: <span id="currencySymbolGer"></span
+                ><span id="balanceFinalGer"></span>
+              </p>
+              <button id="aleman-show-dialog">Mostrar Tabla</button>
+              <canvas id="aleman-AmortizationBarChart"></canvas>
+
+              <dialog id="aleman-dialog">
+                <span class="close">&times;</span>
+                <div class="centrado">
+                  <h4>Cronograma de pagos</h4>
+                </div>
+                <table id="aleman-data-table">
+                  <thead>
+                    <tr>
+                      <th>Nro cuota</th>
+                      <th>Cuota</th>
+                      <th>Interes</th>
+                      <th>Amortizacion</th>
+                      <th>Deuda Restante</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Los datos se agregarán dinámicamente aquí -->
+                  </tbody>
+                </table>
+              </dialog>
+            </div>
+          </div>
+        </div>
+        <!-- Amortización Americana -->
+        <div id="AmericanAmortization" class="tab-content">
+          <div class="form-section">
+            <h2>Amortización Americana</h2>
+            <form id="americanAmortizationForm">
+              <label for="principalAm">Monto inicial:</label>
+              <div>
+                <input type="number" id="principalAm" required />
+                <select id="currencyAm">
+                  <option value="USD">Dólar</option>
+                  <option value="EUR">Euro</option>
+                  <option value="PEN">Sol</option>
+                  <option value="JPY">Yen</option>
+                  <option value="CNY">Yuan</option>
+                </select>
+              </div>
+              <label for="rateAm">Tasa de interés:</label>
+              <div>
+                <input type="number" id="rateAm" step="0.01" required />
+                <select id="rateUnitAm">
+                  <option value="yearly">Anual</option>
+                  <option value="monthly">Mensual</option>
+                  <option value="quarterly">Trimestral</option>
+                  <option value="fortnightly">Quincenal</option>
+                  <option value="daily">Diaria</option>
+                </select>
+              </div>
+              <label for="timeAm">Cantidad de cuotas:</label>
+              <div>
+                <input type="number" id="timeAm" required />
+                <select id="timeUnitAm">
+                  <option value="years">Años</option>
+                  <option value="months">Meses</option>
+                  <option value="quarters">Trimestres</option>
+                  <option value="fortnights">Quincenas</option>
+                  <option value="days">Días</option>
+                </select>
+              </div>
+              <button type="submit">Calcular</button>
+            </form>
+          </div>
+          <div class="results-section">
+            <div class="results">
+              <h3>Resumen</h3>
+              <p>
+                Total Amortizacion: <span id="currencySymbolAm"></span
+                ><span id="totalCapitalAm"></span>
+              </p>
+              <p>
+                Total Interés: <span id="currencySymbolAm"></span
+                ><span id="totalInterestAm"></span>
+              </p>
+              <p>
+                Total Cuota: <span id="currencySymbolAm"></span
+                ><span id="balanceFinalAm"></span>
+              </p>
+              <button id="american-show-dialog">Mostrar Tabla</button>
+              <canvas id="american-AmortizationBarChart"></canvas>
+
+              <dialog id="american-dialog">
+                <span class="close">&times;</span>
+                <div class="centrado">
+                  <h4>Cronograma de pagos</h4>
+                </div>
+                <table id="american-data-table">
+                  <thead>
+                    <tr>
+                      <th>Nro cuota</th>
+                      <th>Cuota</th>
+                      <th>Interes</th>
+                      <th>Amortizacion</th>
+                      <th>Deuda Restante</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Los datos se agregarán dinámicamente aquí -->
+                  </tbody>
+                </table>
+              </dialog>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
     <script src="app.js"></script>
-</body>
+  </body>
 </html>

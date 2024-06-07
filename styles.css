@@ -166,6 +166,10 @@ h2 {
 h3 {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+h4 {
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-align: center;
+}
 p {
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
@@ -203,6 +207,95 @@ img {
 /* input {
     width: 300px;
 } */
+
+/* Estilo para todas las tablas con la clase data-table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para las celdas de encabezado en todas las tablas */
+table th {
+    background-color: #3f40ad;
+    color: white;
+    border: 1px solid #ddd;
+    padding: 7px;
+    text-align: left;
+}
+
+/* Estilo para las celdas de datos en todas las tablas */
+table td {
+    border: 1px solid #ddd;
+    padding: 6px;
+    text-align: left;
+}
+
+/* Estilo para la primera columna en todas las tablas */
+table td:first-child {
+    background-color: #3f40ad;
+    color: white;
+}
+
+/* Estilo para las filas impares en todas las tablas */
+table tr:nth-child(even) {
+    background-color: #c8e2fa;
+}
+
+/* Estilo para las filas al pasar el ratón en todas las tablas */
+table tr:hover {
+    background-color: #eaeaea;
+}
+
+
+/* Estilo para el modal */
+/* Estilo para el diálogo modal */
+dialog {
+    border: 0;
+    border-radius: 15px; /* Bordes redondeados */
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    position: relative;
+  }
+
+  /* Estilo para el fondo del modal */
+  .modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* Estilo para el contenido del diálogo */
+  .modal dialog {
+    background-color: white;
+    padding: 0px;
+    border-radius: 8px;
+    border: 0;
+    max-width: 80%;
+    position: relative;
+  }
+
+  /* Estilo para el botón de cierre */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+  }
 
 
 select {
